@@ -19,7 +19,7 @@ class PostController extends Controller
     public function index()
     {
         //
-        $posts = Post::all();
+        $posts = Post::orderBy('id', 'desc')->paginate(10);
 
         return view('posts.index')->withPosts($posts);
     }
@@ -47,16 +47,18 @@ class PostController extends Controller
         //hier validieren wir die angeforderten daten
         $this->validate($request, array(
             'title' => 'required|max:255',
+            'slug'  => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'body'  => 'required'
         ));
 
         //in die datenbank speichern !
         $post = new Post;
 
-        $post->title = $request->title;
+        $post->title = $request->title;  //hier daten in die datenbank übernehmen
+        $post->slug  = $request->slug;
         $post->body  = $request->body;
 
-        $post->save(); //hier in die datenbank
+        $post->save(); //hier in die datenbank schieben ! flush
 
         Session::flash('success', 'The blog post was successfully save!');
 
@@ -105,6 +107,7 @@ class PostController extends Controller
         //edit -> save changes -> update in der Datenbank !
           $this->validate($request, array(
             'title' => 'required|max:255',
+            'slug'  => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'body'  => 'required'
           ));
 
@@ -113,6 +116,7 @@ class PostController extends Controller
 
           //hier werden die neuerungen gesetzt !
           $post->title = $request->input('title');
+          $post->slug = $request->input('slug');
           $post->body  = $request->input('body');
           //und abflug! Also daten in die Datenbank pushen
           $post->save();

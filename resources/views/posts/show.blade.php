@@ -10,13 +10,18 @@
     <div class="col-md-4">
       <div class="well">
         <dl class="dl-horizontal">
-          <dt>Created At:</dt>
-          <dd>{{ date('M j, Y H:i', strtotime($post->created_at)) }}</dd>
+          <label>Url:</label>
+          <p><a href="{{ url($post->slug) }}">{{url($post->slug)}}</a></p>
         </dl>
 
         <dl class="dl-horizontal">
-          <dt>Edited At:</dt>
-          <dd>{{ date('M j, Y  H:i', strtotime($post->updated_at)) }}</dd>
+          <label>Created At:</label>
+          <p>{{ date('M j, Y H:i', strtotime($post->created_at)) }}</p>
+        </dl>
+
+        <dl class="dl-horizontal">
+          <label>Edited At:</label>
+          <p>{{ date('M j, Y  H:i', strtotime($post->updated_at)) }}</p>
         </dl>
         <hr>
         <div class="row">
