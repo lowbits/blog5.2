@@ -7,6 +7,12 @@
 
               @include('partials._messages')
 
+              {{ Auth::check() ? "Logged In" : "Logged Out"}}
+
+              <!--@if(Auth::check())
+
+              @endif -->
+
               @yield('content') <!--unser content -->
               @include('partials._footer') <!--unser footer -->
             </div> <!-- end of .container -->
