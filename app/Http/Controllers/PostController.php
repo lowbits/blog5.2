@@ -153,7 +153,7 @@ class PostController extends Controller
           //und abflug! Also daten in die Datenbank pushen
           $post->save();
 
-          if(isset($request->tags)){
+          if(isset($request->tags)){ //wenn tags übergeben werden !
             $post->tags()->sync($request->tags, true);  //hier true, weil hier unsere tags überschrieben werden!
           }else{                                       //DA wenn false: Hätten wir 1 tag angegben, und wir löschen dieses, ersetzten es mit einem anderen
             $post->tags()->sync(array());             //dann würde wir 2 tags haben, das alte und das NEUE .....
