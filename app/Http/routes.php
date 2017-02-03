@@ -27,7 +27,10 @@
 
   //Unsere category Routes !
 Route::resource('categories', 'CategoryController', ['except' => 'create']); // alle funktionen aus unserem CategoryController | except=ausnhahme :create
+ //Unsere tag Routes!
+Route::resource('tags', 'TagController', ['except' => 'create']);
 
+ 
 Route::get('blog/{slug}',['as' => 'blog.single', 'uses' => 'BlogController@getSingle'])
       ->where('slug', '[\w\d\-\_\ä\ö\ü]+'); //reguläre Sprache \w = alle wörter \d= alle zahlen \- ist klar! \_ ist eben so klar
 Route::get('blog',['as' => 'blog.index', 'uses' => 'BlogController@getIndex']);

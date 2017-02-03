@@ -6,6 +6,13 @@
     <div class="col-md-8">
       <h1>{{ $post->title }}</h1>
       <p class="lead">{{ $post->body }}</p>
+      <hr>
+      <div class="tags">
+
+        @foreach($post->tags as $tag)
+        <span class="label label-default">{{ $tag->name }}</span>
+        @endforeach
+      </div>
     </div>
     <div class="col-md-4">
       <div class="well">
@@ -16,7 +23,7 @@
 
         <dl class="dl-horizontal">
           <label>Category:</label>
-          <p>{{ $post->category->name }}</p> 
+          <p>{{ $post->category->name }}</p>
         </dl>
 
         <dl class="dl-horizontal">
