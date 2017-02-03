@@ -23,7 +23,10 @@
   Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
   Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
   Route::post('password/reset', 'Auth\PasswordController@reset');
+//---------------------------------------------------------------------------------------------//
 
+  //Unsere category Routes !
+Route::resource('categories', 'CategoryController', ['except' => 'create']); // alle funktionen aus unserem CategoryController | except=ausnhahme :create
 
 Route::get('blog/{slug}',['as' => 'blog.single', 'uses' => 'BlogController@getSingle'])
       ->where('slug', '[\w\d\-\_\ä\ö\ü]+'); //reguläre Sprache \w = alle wörter \d= alle zahlen \- ist klar! \_ ist eben so klar

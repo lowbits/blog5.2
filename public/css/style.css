@@ -12,3 +12,10 @@
 .forgot-spacing{
   margin-top: 2px;
 }
+
+.category_a{
+  cursor:pointer;
+  background-color: rgba(0, 8, 255, 0.9);
+  border-radius: 20px;
+  padding: 1% 1% 1% 1%;
+}
