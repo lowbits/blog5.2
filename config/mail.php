@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'noreplay@vanloberto.com', 'name' => 'Tobi van Loberto´s App'],
 
     /*
     |--------------------------------------------------------------------------

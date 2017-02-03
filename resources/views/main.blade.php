@@ -7,7 +7,7 @@
 
               @include('partials._messages')
 
-              {{ Auth::check() ? "Logged In" : "Logged Out"}}
+
 
               <!--@if(Auth::check())
 
