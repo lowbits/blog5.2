@@ -41,7 +41,7 @@ class CategoryController extends Controller
     {
         // hier wird eine neue Category erstllt und in die Datenbank gepackt -> user soll dann auf index zurück geleitet werden
         $this->validate($request, array(
-          'name' =>'required|max:255|'
+          'name' =>'required|max:255|unique:categories,name'
         ));
         $category = new Category;
 
