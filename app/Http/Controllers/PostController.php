@@ -174,7 +174,7 @@ class PostController extends Controller
     {
         //
         $post = Post::find($id); //methode um unser Post zu finden
-
+        $post->tags()->detach(); //jede referenz auf POST mit id, wird auch gelöscht
         $post->delete();
         Session::flash('success', 'Unser Post wurde erfolgreich gelöscht!');
         return redirect()->route('posts.index'); //zurück zur seite mit dem Post

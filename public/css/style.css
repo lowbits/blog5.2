@@ -19,3 +19,50 @@
   border-radius: 20px;
   padding: 1% 1% 1% 1%;
 }
+
+.spacing-top-5{
+  margin-top: 5px;
+}
+.spacing-top-10{
+  margin-top: 10px;
+}
+
+.spacing-top-50{
+  margin-top: 50px;
+}
+.comment{
+  margin-bottom:35px;
+}
+  .author-image{
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    float:left;
+  }
+  .author-name{
+    float:left;
+    margin-left:15px;
+    }
+  .author-name h4{
+    margin:5px 0px;
+  }
+  .author-time{
+    font-size: 11px;
+    font-style: italic;
+    color:#aaa;
+  }
+
+.comment-content{
+  clear:both;
+  margin-left:65px;
+  font-size: 15px;
+  line-height: 1.3em;
+}
+.comments-title{
+  margin-bottom: 45px;
+}
+.comments-title span{
+  margin-right: 15px;
+}

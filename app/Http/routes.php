@@ -30,11 +30,16 @@ Route::resource('categories', 'CategoryController', ['except' => 'create']); // 
  //Unsere tag Routes!
 Route::resource('tags', 'TagController', ['except' => 'create']);
 
- 
+
+//comments Routes!
+  Route::post('comments/{post_id}', ['uses' => 'CommentsController@store', 'as' => 'comments.store']);
+
+
 Route::get('blog/{slug}',['as' => 'blog.single', 'uses' => 'BlogController@getSingle'])
       ->where('slug', '[\w\d\-\_\ä\ö\ü]+'); //reguläre Sprache \w = alle wörter \d= alle zahlen \- ist klar! \_ ist eben so klar
 Route::get('blog',['as' => 'blog.index', 'uses' => 'BlogController@getIndex']);
 Route::get('contact', 'PagesController@getContact');
+Route::post('contact', 'PagesController@postContact');
 Route::get('about', 'PagesController@getAbout');
 Route::get('/', 'PagesController@getIndex');
 
