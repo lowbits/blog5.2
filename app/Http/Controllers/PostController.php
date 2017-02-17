@@ -10,6 +10,7 @@ use App\Post;
 use App\Category;
 use App\Tag;
 use Session;
+use Purifier;
 
 class PostController extends Controller
 {
@@ -68,7 +69,7 @@ class PostController extends Controller
         $post->slug        = $request->slug;
         $post->category_id = $request->category_id;
 
-        $post->body        = $request->body;
+        $post->body        = Purifier::clean($request->body);
 
         $post->save(); //hier in die datenbank schieben ! flush
         $post->tags()->sync($request->tags, false); //synchroniszie TAGS mit posts | False bedeutet überschreibt die alten nicht, addet nur neue
@@ -149,7 +150,7 @@ class PostController extends Controller
           $post->title       = $request->input('title');
           $post->slug        = $request->input('slug');
           $post->category_id = $request->input('category_id');
-          $post->body        = $request->input('body');
+          $post->body        = Purifier::clean($request->input('body'));
           //und abflug! Also daten in die Datenbank pushen
           $post->save();
 
