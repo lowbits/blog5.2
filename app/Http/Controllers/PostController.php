@@ -11,7 +11,8 @@ use App\Category;
 use App\Tag;
 use Session;
 use Purifier;
-
+use Image;
+use Storage;
 class PostController extends Controller
 {
 
@@ -59,7 +60,8 @@ class PostController extends Controller
             'title'       => 'required|max:255',
             'slug'        => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
             'category_id' => 'required|integer',
-            'body'        => 'required'
+            'body'        => 'required',
+            'featured_image' => 'sometimes|image'
         ));
 
         //in die datenbank speichern !
@@ -70,6 +72,15 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
 
         $post->body        = Purifier::clean($request->body);
+
+        //image speichern
+        if($request->hasFile('featured_image')){
+           $image =  $request->file('featured_image');
+           $filename = time() . '.' . $image->getClientOriginalExtension();
+           $location = public_path('images/'. $filename);
+           Image::make($image)->resize(800,400)->save($location);
+           $post->image = $filename;
+        }
 
         $post->save(); //hier in die datenbank schieben ! flush
         $post->tags()->sync($request->tags, false); //synchroniszie TAGS mit posts | False bedeutet überschreibt die alten nicht, addet nur neue
@@ -129,20 +140,21 @@ class PostController extends Controller
         $post = Post::find($id);
 
         //edit -> save changes -> update in der Datenbank !
-          if($request->input('slug') == $post->slug){
+          /*if($request->input('slug') == $post->slug){
             $this->validate($request, array(
                 'title'       => 'required|max:255',
                 'category_id' => 'required|integer',
                 'body'        => 'required'
             ));
-          }else{
+          }else{ }*/
             $this->validate($request, array(
               'title'       => 'required|max:255',
               'category_id' => 'required|integer',
-              'slug'        => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
-              'body'        => 'required'
+              'slug'        => "required|alpha_dash|min:5|max:255|unique:posts,slug,$id",
+              'body'        => 'required',
+              'featured_image' => 'image'
             ));
-          }
+
 
           //finde post mit der gegebenen ID
 
@@ -151,7 +163,25 @@ class PostController extends Controller
           $post->slug        = $request->input('slug');
           $post->category_id = $request->input('category_id');
           $post->body        = Purifier::clean($request->input('body'));
+
+            if($request->hasFile('featured_image')){
+              //neues bild hinzufügen
+
+               $image =  $request->file('featured_image');
+               $filename = time() . '.' . $image->getClientOriginalExtension();
+               $location = public_path('images/'. $filename);
+               Image::make($image)->resize(800,400)->save($location);
+
+               $oldFilename = $post->image;
+            //datenbank updaten
+              $post->image = $filename;
+            //altes bild löschen
+
+            Storage::delete($oldFilename);
+          }
+
           //und abflug! Also daten in die Datenbank pushen
+
           $post->save();
 
           if(isset($request->tags)){ //wenn tags übergeben werden !
@@ -176,6 +206,7 @@ class PostController extends Controller
         //
         $post = Post::find($id); //methode um unser Post zu finden
         $post->tags()->detach(); //jede referenz auf POST mit id, wird auch gelöscht
+        Storage::delete($post->image);
         $post->delete();
         Session::flash('success', 'Unser Post wurde erfolgreich gelöscht!');
         return redirect()->route('posts.index'); //zurück zur seite mit dem Post
